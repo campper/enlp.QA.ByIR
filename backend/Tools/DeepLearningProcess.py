@@ -14,7 +14,7 @@ def sentence_classify(corpus,target_path,keyword):
     while line:
         # print line
         if line.__contains__(keyword):
-            print line
+            print(line)
             fw.write(line)
         line = fr.readline()
 
@@ -105,23 +105,23 @@ def get_onehot(dic_path, corpus_path, x_path, y_path):
         text = line.strip()
 
         if "是谁" in text:
-            print text
+            print(text)
             list_labels.append([0,1,0,0,0])
             who += 1
         elif "在哪里" in text:
-            print text
+            print(text)
             list_labels.append([0,0,1,0,0])
             where += 1
         elif "是什么" in text:
-            print text
+            print(text)
             list_labels.append([0,0,0,1,0])
             what += 1
         elif "多少" in text:
-            print text
+            print(text)
             list_labels.append([0,0,0,0,1])
             howmuch += 1
         else:
-            print text
+            print(text)
             list_labels.append([1,0,0,0,0])
             other += 1
 
@@ -138,23 +138,23 @@ def get_onehot(dic_path, corpus_path, x_path, y_path):
 
         t = np.array(temp_list)
         list.append(np.lib.pad(t,(0,23-len(temp_list)),'constant',constant_values=(0,0)))
-        print onehots
+        print(onehots)
 
         line = fr.readline()
 
-    print "where"+str(where)
-    print "howmuch"+str(howmuch)
-    print "what"+str(what)
-    print "howucht"+str(howmuch)
-    print "other"+str(other)
+    print("where"+str(where))
+    print("howmuch"+str(howmuch))
+    print("what"+str(what))
+    print("howucht"+str(howmuch))
+    print("other"+str(other))
 
     fr.close()
 
     X = np.array(list)
     Y = np.array(list_labels)
 
-    print X
-    print Y
+    print(X)
+    print(Y)
     np.savetxt(x_path,X, fmt="%d")
     np.savetxt(y_path,Y, fmt="%d")
 '''

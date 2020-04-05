@@ -18,7 +18,7 @@ from AnswerGeneration import aiml_generate
 import time
 
 mybot = aiml.Kernel()
-mybot.learn(os.path.split(os.path.realpath(__file__))[0]+"/resources/std-startup.xml")
+mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/std-startup.xml")
 mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/bye.aiml")
 mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/tools.aiml")
 mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/bad.aiml")
@@ -69,8 +69,8 @@ if __name__ == "__main__":
     # question = "姚明是谁"
     # question = "分大赛佛鳄玩法"
     msg = qa(question, T, mybot, QAT)
-    print msg
-    print '$' * 30
+    print(msg)
+    print('$' * 30)
 
     # 注意处理msg是列表还是字符串形式，对于列表，可能有多个答案。
     if type(msg) == type([]):

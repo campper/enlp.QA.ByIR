@@ -27,14 +27,14 @@ def aiml_answer_generate(q_parsed, mybot, QAT, question):
             ans = [mybot.respond('找不到答案')]
         elif response[0] == '#':
             if response.__contains__("searchbaike"):
-                print "searchbaike"
-                print response
+                print("search baike")
+                print(response)
                 res = response.split(':')
                 #实体
                 entity = str(res[1]).replace(" ","")
                 #属性
                 attr = str(res[2]).replace(" ","")
-                print entity+'<---->'+attr
+                print(entity+'<---->'+attr)
 
                 ans = baike.query(entity, attr)
                 # 如果命中答案
@@ -42,12 +42,12 @@ def aiml_answer_generate(q_parsed, mybot, QAT, question):
                     ans = [QAT.ptranswer(ans, False)]
                 elif ans.decode('utf-8').__contains__(u'::找不到'):
                     #百度摘要+Bing摘要
-                    print "通用搜索"
+                    print("通用搜索")
                     ans = search_summary.kwquery(input_message)
 
             # 匹配不到模版，通用查询
             elif response.__contains__("NoMatchingTemplate"):
-                print "NoMatchingTemplate"
+                print("NoMatchingTemplate")
                 ans = search_summary.kwquery(input_message)
 
 

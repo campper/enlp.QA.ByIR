@@ -30,8 +30,6 @@ def get_html_baike(url):
     # print(soup.prettify())
     return soup_baike
 
-
-
 '''
 获取Bing网典的页面
 '''
@@ -43,8 +41,6 @@ def get_html_bingwd(url):
     [s.extract() for s in soup_bingwd(['script', 'style', 'img', 'sup', 'b'])]
     # print(soup.prettify())
     return soup_bingwd
-
-
 
 '''
 获取百度搜索的结果
@@ -81,7 +77,7 @@ def ptranswer(ans,ifhtml):
     # print ans
     for answer in ans:
         if ifhtml:
-            print answer
+            print(answer)
         else:
             if answer == u'\n':
                 # print '回车'

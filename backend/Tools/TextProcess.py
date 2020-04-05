@@ -48,8 +48,8 @@ def xiaohuangji_textprocess(fr_path,fw_path):
         if line[0] == 'E':
             question = fr.readline()[2:].strip()
             answer = fr.readline()[2:]
-            print question
-            print answer
+            print(question)
+            print(answer)
             if len(question)<20 and len(answer)<30:
                 i +=1
                 qa_pair = question+":::"+answer
@@ -58,7 +58,7 @@ def xiaohuangji_textprocess(fr_path,fw_path):
 
     fw.close()
     fr.close()
-    print 'Finished'
+    print('Finished')
 
 '''
 q:::a text processing
@@ -71,7 +71,7 @@ def tp2(fr_path,fw_path):
         flag = 0
         words = pseg.cut(line)
         for w in words:
-            print w.word, w.flag
+            print(w.word, w.flag)
             if w.flag == 'nr':
                 flag = 1
         if flag == 0:
@@ -80,7 +80,7 @@ def tp2(fr_path,fw_path):
 
     fw.close()
     fr.close()
-    print 'Finished'
+    print('Finished')
 
 
 

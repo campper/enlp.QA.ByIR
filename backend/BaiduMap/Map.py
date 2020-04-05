@@ -22,4 +22,4 @@ url = "http://api.map.baidu.com/direction/v1?mode="+mode\
 req = urllib2.Request(url)
 res = urllib2.urlopen(req)
 
-print res.read()
+print(res.read())

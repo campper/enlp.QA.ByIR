@@ -7,7 +7,6 @@ from Tools import Html_Tools as To
 from Tools import TextProcess as T
 import os
 
-
 def get_info(basicInfo_block):
     info = {}
     # basicInfo_left = basicInfo_block.contents[1]
@@ -31,8 +30,8 @@ def ptr_Info(info):
     for i in info:
         attr_name = i.encode('utf8').replace(" ","")
         attr_value = str(info[i])
-        print '属性名=  ' + attr_name
-        print '属性值=  ' + attr_value
+        print('属性名=  ' + attr_name)
+        print('属性值=  ' + attr_value)
 
 
 '''
@@ -50,7 +49,9 @@ def query(entity,attr):
         #     print i
         #     print info[i]
         # print '-----------'
-        if info.has_key(attr.decode('utf8')):
+        #if info.has_key(attr.decode('utf8')):
+        if attr.decode('utf8') in info:
+
             # print 'has key'+attr.decode('utf8')
             return info[attr.decode('utf8')]
         else:
@@ -58,7 +59,8 @@ def query(entity,attr):
             # 同义词判断
             attr_list = T.load_baikeattr_name(os.path.dirname(os.path.dirname(os.path.split(os.path.realpath(__file__))[0]))+'/resources/Attribute_name.txt')
             attr = T.load_synonyms_word_inattr(attr,os.path.dirname(os.path.dirname(os.path.split(os.path.realpath(__file__))[0]))+'/resources/SynonDic.txt',attr_list)
-            if info.has_key(attr.decode('utf8')):
+            # if info.has_key(attr.decode('utf8')):
+            if attr.decode('utf8') in info:
                 return info[attr.decode('utf8')]
             else:
                 return attr + "::找不到"
