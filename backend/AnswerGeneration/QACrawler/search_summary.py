@@ -5,28 +5,35 @@ from urllib.parse import quote
 
 from Tools import Html_Tools as To
 from Tools import TextProcess as T
+from api import *
 
 '''
 对百度、Bing 的搜索摘要进行答案的检索
 （需要加问句分类接口）
 '''
 
+def entity_extract_by_postag(words,pattern):
+    """
+    按照词性标注结果抽取实体,jieba分词和词性标注
+    :param words: 分词列表
+    :param pattern: 词性模式
+    :return: 实体列表
+    """
+    keywords=[]
+    for k in words:
+        if k.flag.__contains__(pattern):
+            keywords.append(k.word)
+    return keywords
+
 def kwquery(query):
     #分词 去停用词 抽取关键词，抽取实体
-    keywords = []
     words = T.postag(query)
-    for k in words:
-        # 只保留名词
-        if k.flag.__contains__("n"):
-            # print k.flag
-            # print k.word
-            keywords.append(k.word)
+    keywords = entity_extract_by_postag(words,"n")
 
     answer = []
     text = ''
     # 找到答案就置1
     flag = 0
-
 
     # 抓取百度前10条的摘要
     soup_baidu = To.get_html_baidu('https://www.baidu.com/s?wd='+quote(query))
@@ -35,7 +42,6 @@ def kwquery(query):
         if soup_baidu == None:
             break
         results = soup_baidu.find(id=i)
-
         if results == None:
             print("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename, sys._getframe().f_code.co_name,
                                                      sys._getframe().f_lineno))
@@ -47,7 +53,7 @@ def kwquery(query):
 
         #判断是否有mu,如果第一个是百度知识图谱的 就直接命中答案
         # if results.attrs.has_key('mu') and i== 1:
-        if 'mu' in results.attrs and i == 1 or i == 2:
+        if 'mu' in results.attrs and i == 1:
             # print results.attrs["mu"]
             r = results.find(class_='op_exactqa_s_answer')
             if r == None:

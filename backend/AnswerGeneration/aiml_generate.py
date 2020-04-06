@@ -1,9 +1,9 @@
 # coding:utf8
 
-from AnswerGeneration.QACrawler import baike
+from AnswerGeneration.QACrawler.api import baike
 from AnswerGeneration.QACrawler import search_summary
 import requests
-
+import sys
 import time
 
 def my_time():
@@ -67,3 +67,4 @@ def aiml_answer_generate(q_parsed, mybot, QAT, question):
         ans = ['抱歉，我不知道如何回答您，等我再学习学习。'] # 未接入互联网 modified by zhangq 2018-03-28
 
     return ans
+
