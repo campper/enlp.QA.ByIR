@@ -2,7 +2,7 @@
 import aiml
 import os,sys
 
-from AnswerGeneration.QACrawler import baike
+from AnswerGeneration.QACrawler.api import baike
 from Tools import Html_Tools as QAT
 from Tools import TextProcess as T
 from AnswerGeneration.QACrawler import search_summary
@@ -53,7 +53,8 @@ def qa(question):
 
         if response == "":
             ans = mybot.respond('找不到答案')
-            print(robot_id + ":" + ans)
+            # print(robot_id + ":" + ans)
+            print("{0}:{1}".format(robot_id,ans))
         # 百科搜索
         elif response[0] == '#':
             # 匹配百科
@@ -90,7 +91,8 @@ def qa(question):
                 print("{}:不确定候选答案".format(sys.exc_info()[2].tb_frame.f_back))
                 print(robot_id + ': ')
                 for a in ans:
-                    print(a.encode("utf8"))
+                    print(a)
+                    # print(a.encode("utf8"))
             else:
                 print('{0}:{1}'.format(robot_id,ans[0].encode("utf8")))
 

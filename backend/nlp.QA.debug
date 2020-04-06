@@ -2,25 +2,6 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "[('w3', 3), ('w1', 1), ('w2', 1)]\n"
-     ]
-    }
-   ],
-   "source": [
-    "target_lists={'w1':1,'w2':1,'w3':3}\n",
-    "sorted_lists = sorted(target_lists.items(),key=lambda x:x[1],reverse=True)\n",
-    "print(sorted_lists)"
-   ]
-  },
-  {
-   "cell_type": "code",
    "execution_count": 11,
    "metadata": {},
    "outputs": [
@@ -36,66 +17,6 @@
     "ans = ['w1']\n",
     "print(ans[0].encode('utf-8'))"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 13,
-   "metadata": {
-    "scrolled": true
-   },
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "<!DOCTYPE html>\n",
-      "<html lang=\"zh-CN\">\n",
-      "<head>\n",
-      "<meta charset=\"utf-8\"/>\n",
-      "<title>百度安全验证</title>\n",
-      "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\"/>\n",
-      "<meta content=\"yes\" name=\"apple-mobile-web-app-capable\"/>\n",
-      "<meta content=\"black\" name=\"apple-mobile-web-app-status-bar-style\"/>\n",
-      "<meta content=\"width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0\" name=\"viewport\"/>\n",
-      "<meta content=\"telephone=no, email=no\" name=\"format-detection\"/>\n",
-      "<link href=\"https://www.baidu.com/favicon.ico\" rel=\"shortcut icon\" type=\"image/x-icon\"/>\n",
-      "<link href=\"https://www.baidu.com/img/baidu.svg\" mask=\"\" rel=\"icon\" sizes=\"any\"/>\n",
-      "<meta content=\"IE=Edge\" http-equiv=\"X-UA-Compatible\"/>\n",
-      "<meta content=\"upgrade-insecure-requests\" http-equiv=\"Content-Security-Policy\"/>\n",
-      "<link href=\"https://wappass.bdimg.com/static/touch/css/api/mkdjump_8befa48.css\" rel=\"stylesheet\"/>\n",
-      "</head>\n",
-      "<body>\n",
-      "<div class=\"timeout hide\">\n",
-      "<div class=\"timeout-img\"></div>\n",
-      "<div class=\"timeout-title\">网络不给力，请稍后重试</div>\n",
-      "<button class=\"timeout-button\" type=\"button\">返回首页</button>\n",
-      "</div>\n",
-      "<div class=\"timeout-feedback hide\">\n",
-      "<div class=\"timeout-feedback-icon\"></div>\n",
-      "<p class=\"timeout-feedback-title\">问题反馈</p>\n",
-      "</div>\n",
-      "<script src=\"https://wappass.baidu.com/static/machine/js/api/mkd.js\"></script>\n",
-      "<script src=\"https://wappass.bdimg.com/static/touch/js/mkdjump_2e06726.js\"></script>\n",
-      "</body>\n",
-      "</html>\n"
-     ]
-    }
-   ],
-   "source": [
-    "from bs4 import BeautifulSoup\n",
-    "import requests\n",
-    "url='https://www.baidu.com/s?wd=%E5%8C%97%E4%BA%AC%E9%82%AE%E7%94%B5%E5%A4%A7%E5%AD%A6'\n",
-    "headers = {'User-Agent':'Mozilla/5.0 (X11; U; Linux i686)Gecko/20071127 Firefox/2.0.0.11'}\n",
-    "soup_baidu = BeautifulSoup(requests.get(url=url, headers=headers).content.decode('utf-8'), \"lxml\")\n",
-    "print(soup_baidu)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
