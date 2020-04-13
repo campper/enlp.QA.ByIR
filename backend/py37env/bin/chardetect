@@ -1,4 +1,4 @@
-#!/home/qzhang/projects/geiri.nlp.project/nlp.QA/backend/py37env/bin/python
+#!/home/icowin/projects/geiri.nlp.projects/nlp.QA.ByIR/backend/py37env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
