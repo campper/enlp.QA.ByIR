@@ -1,17 +1,19 @@
 #coding:utf8
 import aiml
 import os,sys
+import logs
 
 from AnswerGeneration.QACrawler.api import baike
 from Tools import Html_Tools as QAT
 from Tools import TextProcess as T
 from AnswerGeneration.QACrawler import search_summary
 
+
 robot_id = 'Robot(Rises)'
 
 def qa(question):
 
-    #初始化jb分词器
+    #初始化jieba分词器
     T.jieba_initialize()
 
     #切换到语料库所在工作目录
@@ -19,7 +21,7 @@ def qa(question):
     # os.chdir(mybot_path)
 
     mybot = aiml.Kernel()
-    mybot.learn(os.path.split(os.path.realpath(__file__))[0]+"/resources/std-startup.xml")
+    mybot.learn(os.path.split(os.path.realpath(__file__))[0] +"/resources/std-startup.xml")
     mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/bye.aiml")
     mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/tools.aiml")
     mybot.learn(os.path.split(os.path.realpath(__file__))[0] + "/resources/bad.aiml")
@@ -71,10 +73,11 @@ def qa(question):
                 ans = baike.query(entity, attr)
                 # 如果命中答案
                 if type(ans) == list:
-                    print(robot_id + '：' + QAT.ptranswer(ans,False))
+                    print("{0}:{1}".format(robot_id,QAT.ptranswer(ans,False)))
                 elif ans.decode('utf-8').__contains__(u'::找不到'):
                     #百度摘要+Bing摘要
                     print("通用搜索")
+                    log.info("通用搜索")
                     ans = search_summary.kwquery(input_message)
 
             # 匹配不到模版，通用查询
@@ -85,10 +88,13 @@ def qa(question):
 
             if len(ans) == 0:
                 ans = mybot.respond('找不到答案')
-                print(robot_id + '：' + ans)
+                logs.info("{0}:{1}".format(robot_id,ans))
             elif len(ans) >1:
-                print(sys.exc_info())
-                print("{}:不确定候选答案".format(sys.exc_info()[2].tb_frame.f_back))
+                logs.info(sys.exc_info())
+                logs.info("不确定候选答案")
+                logs.info("[{0}][func:{1}][line:{2}]:不确定候选答案".format(sys._getframe().f_code.co_filename,
+                                                                     sys._getframe().f_code.co_name,
+                                                                     sys._getframe().f_lineno))
                 print(robot_id + ': ')
                 for a in ans:
                     print(a)

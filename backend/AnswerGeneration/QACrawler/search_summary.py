@@ -5,7 +5,7 @@ from urllib.parse import quote
 
 from Tools import Html_Tools as To
 from Tools import TextProcess as T
-from api import *
+import logs
 
 '''
 对百度、Bing 的搜索摘要进行答案的检索
@@ -26,8 +26,9 @@ def entity_extract_by_postag(words,pattern):
     return keywords
 
 def kwquery(query):
-    #分词 去停用词 抽取关键词，抽取实体
+    # 分词 去停用词 抽取关键词，抽取实体
     words = T.postag(query)
+    # 获取对应模式下的词语
     keywords = entity_extract_by_postag(words,"n")
 
     answer = []
@@ -43,7 +44,7 @@ def kwquery(query):
             break
         results = soup_baidu.find(id=i)
         if results == None:
-            print("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename, sys._getframe().f_code.co_name,
+            logs.info("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename, sys._getframe().f_code.co_name,
                                                      sys._getframe().f_lineno))
             break
         # print '============='
