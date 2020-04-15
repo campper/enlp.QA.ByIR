@@ -236,6 +236,24 @@ def kwquery(query):
                     answer.append(r)
                     flag = 1
                     break
+            if temp.__contains__(u"百度百科"):
+                print('从bing进入百度百科')
+                url = bl.find("h2").find("a")['href']
+                if url == None:
+                    print("百度百科找不到答案")
+                    continue
+                else:
+                    print("百度百科找到答案")
+                    baike_soup = To.get_html_baike(url)
+
+                    r = baike_soup.find(class_='lemma-summary')
+                    if r == None:
+                        continue
+                    else:
+                        r = r.get_text().replace("\n","").strip()
+                    answer.append(r)
+                    flag = 1
+                    break
 
         if flag == 1:
             return answer
