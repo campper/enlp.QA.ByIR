@@ -1,8 +1,11 @@
 #coding:utf8
 
+# 分词模块后期替换为rises.seg
+
 import jieba
 import jieba.posseg as pseg
 import os,sys
+sys.path.append("..")
 
 '''
 initialize jieba Segment
@@ -121,6 +124,25 @@ def load_synonyms_word_inattr(word,synsdic,attr):
     if tar_word == '':
         tar_word = 'Empty'
     return  tar_word
+
+
+'''
+对百度、Bing 的搜索摘要进行答案的检索
+（需要加问句分类接口）
+'''
+
+def entity_extract_by_postag(words,pattern):
+    """
+    按照词性标注结果抽取实体,jieba分词和词性标注
+    :param words: 分词列表
+    :param pattern: 词性模式
+    :return: 实体列表
+    """
+    keywords=[]
+    for k in words:
+        if k.flag.__contains__(pattern):
+            keywords.append(k.word)
+    return keywords
 
 if __name__ == '__main__':
     pass

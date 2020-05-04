@@ -41,7 +41,7 @@
   <category>
     <pattern>天气</pattern>
     <template>
-      天气戳这里：http://www.weather.com.cn/weather/101020100.shtml
+      <a href="http://www.weather.com.cn/" target="_blank" style="color:">天气预报点这里看哦</a>
     </template>
   </category>
   <category><pattern>今天天气 *</pattern><template><srai>天气</srai> </template>  </category>

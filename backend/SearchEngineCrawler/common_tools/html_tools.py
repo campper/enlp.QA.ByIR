@@ -4,7 +4,9 @@ import urllib
 import re
 from bs4 import BeautifulSoup
 import requests,time
-
+import sys
+sys.path.append("..")
+print(sys.path)
 
 '''
 获取百度知道的页面

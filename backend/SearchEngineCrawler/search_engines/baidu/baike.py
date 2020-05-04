@@ -3,9 +3,15 @@
 import sys
 # print >> sys.stderr, 'baike.py', sys.path
 
-from Tools import Html_Tools as To
-from Tools import TextProcess as T
+from backend.SearchEngineCrawler.common_tools import html_tools as To
+from backend.utils import TextProcess as T
 import os
+
+class BaiKe(BaiduEngine):
+    """
+    百度百科内容抓取
+    """
+    pass
 
 def get_info(basicInfo_block):
     info = {}
@@ -44,14 +50,13 @@ def query(entity,attr):
         # print 'info None'
         return attr + "::找不到"
     else:
-        info  = get_info(basicInfo_block)
+        info = get_info(basicInfo_block)
         # for i in info:
         #     print i
         #     print info[i]
         # print '-----------'
         #if info.has_key(attr.decode('utf8')):
         if attr.decode('utf8') in info:
-
             # print 'has key'+attr.decode('utf8')
             return info[attr.decode('utf8')]
         else:

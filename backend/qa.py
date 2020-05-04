@@ -100,7 +100,7 @@ def qa(question):
                     print(a)
                     # print(a.encode("utf8"))
             else:
-                print('{0}:{1}'.format(robot_id,ans[0].encode("utf8")))
+                print('{0}:{1}'.format(robot_id,ans[0]))
 
         # 匹配模版
         else:
