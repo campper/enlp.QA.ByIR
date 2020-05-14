@@ -7,7 +7,7 @@ sys.path.append(".")
 
 class SearchEngine():
     """
-    搜索引擎基类
+    搜索引擎抓取基类
     """
     def __init__(self):
         self.query = ''

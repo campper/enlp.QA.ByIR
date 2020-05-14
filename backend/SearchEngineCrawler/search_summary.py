@@ -3,9 +3,9 @@ import sys
 import time
 from urllib.parse import quote
 
-from common_tools import Html_Tools as To
-from utils import TextProcess as T
-import logs
+from backend.SearchEngineCrawler.common_tools import Html_Tools as To
+from backend.utils import TextProcess as T
+import backend.logs
 
 def kwquery(query):
     # 分词 去停用词 抽取关键词，抽取实体
@@ -21,8 +21,7 @@ def kwquery(query):
 
     # 抓取百度前10条的摘要
 
-
-    #获取bing的摘要
+    # 获取bing的摘要
     soup_bing = To.get_html_bing('https://www.bing.com/search?q='+quote(query))
     # 判断是否在Bing的知识图谱中
     # bingbaike = soup_bing.find(class_="b_xlText b_emphText")
@@ -87,6 +86,10 @@ def kwquery(query):
         text += results.get_text()
 
     # print text
+
+    # 抓取搜狗
+
+    # 抓取能源语义搜索引擎
 
 
     # 如果再两家搜索引擎的知识图谱中都没找到答案，那么就分析摘要
@@ -160,7 +163,6 @@ def kwquery(query):
 
 
 if __name__ == '__main__':
-    pass
     query = "中国四大美女"
     ans = kwquery(query)
     print("~~~~~~~")

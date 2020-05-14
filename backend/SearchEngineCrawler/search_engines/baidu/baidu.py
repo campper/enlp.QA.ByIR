@@ -9,7 +9,7 @@ from backend.SearchEngineCrawler.common_tools import html_tools as To
 from backend.utils import TextProcess as T
 
 from backend.SearchEngineCrawler.search_engines.base.BaseEngine import SearchEngine
-import backend.logs
+from backend.logs.logger import *
 
 class BaiduEngine(SearchEngine):
 
@@ -191,7 +191,7 @@ class BaiduEngine(SearchEngine):
         if self.flag == 1:
             return self.answer
 
-    def kwquery(self):
+    def search(self):
         """
         检索主函数
         """
@@ -217,7 +217,7 @@ class BaiduEngine(SearchEngine):
 def test():
     query ='国家电网公司'
     baidu = BaiduEngine(query)
-    for result in baidu.kwquery():
+    for result in baidu.search():
         print(result)
         stop = 1
 

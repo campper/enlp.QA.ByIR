@@ -54,7 +54,7 @@ def __log(logging_level, msg, dt=None, is_monitor=False, caller_file=None, calle
     else:
         out_log_str = '[%s:%s:%s] %s\t%s' % (caller_file, lineno, caller_fun, monitor_str, msg)
 
-    logging.getLogger('castle').log(logging_level, out_log_str)
+    logging.getLogger('rises').log(logging_level, out_log_str)
 
 class IntoLogFormat(object):
     log_format = '[%(asctime)s] [%(process)d:%(thread)d] [%(name)s] [%(levelname)s] %(message)s '
@@ -75,7 +75,7 @@ def init_app_logger(app, conf):
     formatter = logging.Formatter(log_format)
 
     # 获取容器的logger
-    werkzeug_logger = logging.getLogger('werkzeug')
+    werkzeug_logger = logging.getLogger('nlp.QA')
     werkzeug_logger.setLevel(log_level)
 
     logger = logging.getLogger('nlp.QA')
