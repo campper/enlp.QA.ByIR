@@ -22,13 +22,19 @@ def kwquery(query):
     keywords = T.entity_extract_by_postag(words, "n")
 
     # 将检索词在几个搜索引擎里找答案
-    # baidu
+    # 1.baidu
     baidu_search = baidu.BaiduEngine(query)
     results = baidu_search.search()
 
     # bing
     bing_search = bing.BingEngine(query)
     results = bing_search.search()
+
+def router():
+    """
+    动态路由:动态选择搜索引擎的返回结果
+    """
+    pass
 
 if __name__ == '__main__':
     query= "国家电网公司"

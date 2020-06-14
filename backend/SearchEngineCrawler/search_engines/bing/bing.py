@@ -24,7 +24,7 @@ class BingEngine(SearchEngine):
         '''
 
         headers = {'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686)Gecko/20071127 Firefox/2.0.0.11'}
-        soup_bingwd = BeautifulSoup(requests.get(url=self.url, headers=headers).content, "lxml")
+        soup_bingwd = BeautifulSoup(requests.get(url=self.url,headers=headers,timeout = self.timeout).content, "lxml")
 
         # 去除无关的标签
         [s.extract() for s in soup_bingwd(['script', 'style', 'img', 'sup', 'b'])]
@@ -50,4 +50,5 @@ class BingEngine(SearchEngine):
                 break
             else:
                 yield self.results
+
 

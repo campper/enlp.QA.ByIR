@@ -13,3 +13,6 @@ class SearchEngine():
         self.query = ''
         self.url = ''
         self.html = ''
+        self.timeout = 10
+        self.charset = 'utf-8'
+

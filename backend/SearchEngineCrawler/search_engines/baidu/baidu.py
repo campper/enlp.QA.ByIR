@@ -20,11 +20,13 @@ class BaiduEngine(SearchEngine):
         super(BaiduEngine,self).__init__()
         self.query = query
         self.url = 'https://www.baidu.com/s?wd=' + quote(self.query)
+        self.agent = 'http://47.105.41.30:8088/query?query=' + quote(self.query)
         self.html = ''
         self.setting_pages(10)
         self.flag = 0
         self.answer = []
-        self.results = ''
+        self.results = None
+
 
     def setting_pages(self,num):
         """
@@ -38,19 +40,19 @@ class BaiduEngine(SearchEngine):
     def __get_html(self):
         headers = {'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686)Gecko/20071127 Firefox/2.0.0.11'}
         try:
-            soup_baidu = BeautifulSoup(requests.get(url=self.url, headers=headers).content.decode('utf-8'), "lxml")
+            soup_baidu = BeautifulSoup(requests.get(url=self.agent, headers=headers,timeout = self.timeout).content.decode(self.charset), "lxml")
             # 去除无关的标签
             [s.extract() for s in soup_baidu(['script', 'style', 'img'])]
             self.soup = soup_baidu
         except Exception as err:
             raise err
 
-    def search_from_zhidao(self):
+    def search_from_zhidao(self,result):
         # 判断是否有mu,如果第一个是百度知识图谱的 就直接命中答案
         # if results.attrs.has_key('mu') and i== 1:
-        if 'mu' in self.results.attrs and i == 1:
+        if 'mu' in result.attrs and i == 1:
             # print results.attrs["mu"]
-            r = self.results.find(class_='op_exactqa_s_answer')
+            r = result.find(class_='op_exactqa_s_answer')
             if r == None:
                 print("[{0}][func:{1}][line:{2}]:百度知识图谱找不到答案".format(sys._getframe().f_code.co_filename,
                                                                      sys._getframe().f_code.co_name,
@@ -62,12 +64,13 @@ class BaiduEngine(SearchEngine):
                                                                     sys._getframe().f_lineno))
                 self.answer.append(r.get_text().strip())
                 self.flag = 1
+        return self.flag
 
-    def get_poetry(self):
+    def get_poetry(self,result):
         # 古诗词判断
         # if results.attrs.has_key('mu') and i == 1:
-        if 'mu' in self.results.attrs and i == 1:
-            r = self.results.find(class_="op_exactqa_detail_s_answer")
+        if 'mu' in result.attrs and i == 1:
+            r = result.find(class_="op_exactqa_detail_s_answer")
             if r == None:
                 print("[{0}][func:{1}][line:{2}]:百度诗词找不到答案".format(sys._getframe().f_code.co_filename,
                                                                    sys._getframe().f_code.co_name,
@@ -195,7 +198,7 @@ class BaiduEngine(SearchEngine):
         """
         检索主函数
         """
-        self.__get_html()
+        self.__get_html()   # 获取页面
         self.flag = 0
 
         for i in range(1, self.num):
@@ -206,19 +209,29 @@ class BaiduEngine(SearchEngine):
                 # logs.info("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename,
                 #                                                          sys._getframe().f_code.co_name,
                 #                                                          sys._getframe().f_lineno))
-
-                print("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename,
+                print("{}".format(i))
+                print("[{0}][func:{1}][line:{2}]:百度找不到检索结果".format(sys._getframe().f_code.co_filename,
                                                                           sys._getframe().f_code.co_name,
                                                                           sys._getframe().f_lineno))
                 break
             else:
                 yield self.results
 
+    def results_processing(self):
+        """
+        处理爬取到的结果
+        """
+        for result in self.search():
+            if(self.search_from_zhidao(result)):    # 获取到答案
+                pass
+            
+
+
 def test():
     query ='国家电网公司'
     baidu = BaiduEngine(query)
-    for result in baidu.search():
-        print(result)
+    for no,result in enumerate(baidu.search()):
+        print("{}:{}".format(no,result.text))
         stop = 1
 
 if __name__ == '__main__':
