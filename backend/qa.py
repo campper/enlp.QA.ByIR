@@ -6,7 +6,7 @@ import logs
 from AnswerGeneration.QACrawler.api import baike
 from Tools import Html_Tools as QAT
 from Tools import TextProcess as T
-from AnswerGeneration.QACrawler import search_summary
+from backend.SearchEngineCrawler import search_summary
 
 
 robot_id = 'Robot(Rises)'

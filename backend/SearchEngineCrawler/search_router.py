@@ -13,6 +13,7 @@ from backend.SearchEngineCrawler.search_engines.bing import bing
 from backend.SearchEngineCrawler.search_engines.rises import rises
 from backend.SearchEngineCrawler.search_engines.sogou import sogou
 from backend.utils import TextProcess as T
+from backend.models.rises import cws
 import backend.logs
 
 def kwquery(query):

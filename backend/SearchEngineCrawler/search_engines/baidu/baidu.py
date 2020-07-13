@@ -1,6 +1,7 @@
 import sys
 from urllib.parse import quote
 import urllib
+import urllib3
 import re
 from bs4 import BeautifulSoup
 import requests,time
@@ -25,7 +26,7 @@ class BaiduEngine(SearchEngine):
         self.setting_pages(10)
         self.flag = 0
         self.answer = []
-        self.results = None
+        self.results = []
 
 
     def setting_pages(self,num):
@@ -198,24 +199,28 @@ class BaiduEngine(SearchEngine):
         """
         检索主函数
         """
-        self.__get_html()   # 获取页面
+        try:
+            self.__get_html()   # 获取页面
+        except urllib3.exceptions.ConnectionError as err:
+            print(err)
+
         self.flag = 0
 
-        for i in range(1, self.num):
-            if self.soup == None:
-                break
-            self.results = self.soup.find(id=i)
-            if self.results == None:
-                # logs.info("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename,
-                #                                                          sys._getframe().f_code.co_name,
-                #                                                          sys._getframe().f_lineno))
-                print("{}".format(i))
-                print("[{0}][func:{1}][line:{2}]:百度找不到检索结果".format(sys._getframe().f_code.co_filename,
-                                                                          sys._getframe().f_code.co_name,
-                                                                          sys._getframe().f_lineno))
-                break
-            else:
-                yield self.results
+        if self.soup != None:
+            for i in range(1, self.num):
+                result = self.soup.find(id=i) #   获取baidu检索结果<div id='1'>
+                if result == None:
+                    # logs.info("[{0}][func:{1}][line:{2}]:百度找不到答摘要摘要案".format(sys._getframe().f_code.co_filename,
+                    #                                                          sys._getframe().f_code.co_name,
+                    #                                                          sys._getframe().f_lineno))
+                    print("[{3}][{0}][func:{1}][line:{2}]:百度找不到检索结果".format(sys._getframe().f_code.co_filename,
+                                                                              sys._getframe().f_code.co_name,
+                                                                              sys._getframe().f_lineno,i))
+                else:
+                    yield result
+                self.results.append(result)
+        else:
+            print("未抓取到")
 
     def results_processing(self):
         """
@@ -224,15 +229,17 @@ class BaiduEngine(SearchEngine):
         for result in self.search():
             if(self.search_from_zhidao(result)):    # 获取到答案
                 pass
-            
 
 
 def test():
     query ='国家电网公司'
     baidu = BaiduEngine(query)
+
     for no,result in enumerate(baidu.search()):
-        print("{}:{}".format(no,result.text))
+        text = result.text.replace(' ','').replace('\n','').replace('\r','')
+        print("[{}]:{}".format(no+1,text))
         stop = 1
+    print(len(baidu.results))
 
 if __name__ == '__main__':
     test()
