@@ -4,8 +4,14 @@
 # Date: 2020/5/2 下午1:22
 import json
 
-
+import sys
+from urllib.parse import quote
+import urllib
+import urllib3
+import re
+from bs4 import BeautifulSoup
 from backend.SearchEngineCrawler.search_engines.base.BaseEngine import SearchEngine
+
 
 class RisesEngine(SearchEngine):
     """
@@ -23,3 +29,6 @@ class RisesEngine(SearchEngine):
         self.flag = 0
         self.answer = []
         self.results = ''
+
+    def seach(self):
+        pass
