@@ -1,6 +1,7 @@
 #coding:utf8
 
 import jieba
+from ecws.segment import Segmenter
 import numpy as np
 
 
@@ -36,6 +37,7 @@ def gen_dic(corpus,target_path):
     while line:
 
         line = line.strip()
+        # seg_list = Segmenter.seg(line)
         seg_list = jieba.cut(line)
         for s in seg_list:
             if s in dic.keys():
